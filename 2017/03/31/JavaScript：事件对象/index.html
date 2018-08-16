@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            JavaScript：事件对象 | 
+        
+        邹洋的博客
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/zy-logo.png">
+    <link rel="icon" href="/img/zy-logo.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="前端开发">
+    <meta name="keywords" content="大洋,JavaScript">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?F3DNsJRX++RFjWtybhKyBw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?r3AOKgPpG5hl03pXnHbbGg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+        
+            <link rel="stylesheet" href="/css/fontawesome.min.css">
+        
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #607d8b !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #607d8b !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #607d8b !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #eef1f5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="邹洋的博客">
+    <meta name="msapplication-starturl" content="http://zouyang0921.com/2017/03/31/JavaScript：事件对象/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="邹洋的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/zy-logo.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://zouyang0921.com/2017/03/31/JavaScript：事件对象/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="JavaScript：事件对象 | 邹洋的博客">
+    <meta property="og:image" content="/img/zy-logo.png">
+    <meta property="og:description" content="前端开发">
+    <meta property="og:article:tag" content="JavaScript"> 
+
+    
+        <meta property="article:published_time" content="Fri Mar 31 2017 00:00:00 GMT+0800">
+        <meta property="article:modified_time" content="Fri Jun 22 2018 16:00:19 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://zouyang0921.com/2017/03/31/JavaScript：事件对象/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://zouyang0921.com/2017/03/31/JavaScript：事件对象/index.html",
+    "headline": "JavaScript：事件对象",
+    "datePublished": "Fri Mar 31 2017 00:00:00 GMT+0800",
+    "dateModified": "Fri Jun 22 2018 16:00:19 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "zouyang0921",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Don't be the same, be better ！"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "邹洋的博客",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/zy-logo.png"
+        }
+    },
+    "keywords": ",JavaScript大洋",
+    "description": "前端开发",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Isolation" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+                    <!-- Isolation Header -->
+                    <header class="header">
+    <div class="header-wrapper">
+        <!-- Header Copyright -->
+        <div class="header-copyright">
+            <div class="header-site">
+                ©&nbsp;
+                <script type="text/javascript">
+                    var fd = new Date();
+                    document.write(fd.getFullYear());
+                </script>
+                &nbsp;邹洋的博客
+            </div>
+            <!--
+            I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+            It will not impact the appearance and can give developers a lot of support :)
+
+            很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+            它不会影响美观并可以给开发者很大的支持。 :)
+            -->
+            <div>
+                Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a>
+                <br>
+                Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a>
+            </div>
+        </div>
+
+        <!-- Header Title -->
+        <span class="header-title header-item">
+            <a href="/" title="邹洋的博客">
+                邹洋的博客
+            </a>
+        </span>
+
+        <p class="header-slogan header-item">
+        
+            
+                Don't be the same, be better ！
+            
+        
+        </p>
+
+        <!-- Header Nav -->
+        <nav class="header-nav header-item">
+            <span class="header-nav-item">
+                <a href="/" title="Home">
+                    <span>主页</span>
+                </a>
+            </span>
+
+            <!-- Pages  -->
+            
+            
+        </nav>
+
+        <!-- Header SNS -->
+        <div class="header-item header-sns_list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+        <a href="https://weibo.com/u/1761377354/home?wvr=5&amp;lf=reg" target="_blank">
+            <i class="fa fa-weibo fa-lg" aria-hidden="true"></i>
+        </a>
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/zouyang0921" target="_blank">
+            <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+        </a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+    </div>
+</header>
+
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+
+                    <!-- Post TOC -->
+
+    
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+
+
+    <!-- Isolation Post Header -->
+    <!-- Post thumbnail -->
+    
+        <!-- Post Header Info -->
+        <div class="post-header_info without-thumbnail">
+            <!-- Author Avatar & Name -->
+            <img src="/img/avatar.png" class="avatar-img" width="44px" height="44px" alt="zouyang0921's avatar">
+            <span class="name-span">zouyang0921</span>
+        </div>
+
+        <!-- Null Thumbnail -->
+        <div class="post_thumbnail-null">
+    
+        </div>
+
+
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+
+    
+        <div class="post-content_wrapper">
+            <p class="post-title">
+                JavaScript：事件对象
+            </p>
+            <p>&emsp;&emsp;在触发 DOM 上的某个事件时，会产生一个事件对象 event，这个对象中包含着所有与事件有关的信息。包括导致事件的元素、事件的类型以及其他与特定事件相关的信息。<br>&emsp;&emsp;所有浏览器都支持 event 对象，但支持方式不同。</p>
+<h3 id="DOM中的事件对象"><a href="#DOM中的事件对象" class="headerlink" title="DOM中的事件对象"></a>DOM中的事件对象</h3><p>&emsp;&emsp;兼容 DOM 的浏览器会将一个 event 对象传入到事件处理程序中。无论指定事件处理程序时使用什么方法（DOM0 级或 DOM2 级），都会传入 event 对象。  </p>
+<pre><code>var btn = document.getElementById(&#39;myBtn&#39;);
+btn.onclick = function(event) {
+    alert(event.type);     // click
+};
+
+btn.addEventListener(&#39;click&#39;, function(event) {
+    alert(event.type);     // click
+}, false);
+</code></pre><p>&emsp;&emsp;在通过 HTML 特性指定事件处理程序时，变量 event 中保存着 event 对象。</p>
+<pre><code>&lt;input type=&quot;button&quot; value=&quot;Click Me&quot; onclick=&quot;alert(event.type)&quot;/&gt;
+</code></pre><p>&emsp;&emsp;event 对象包含与创建它的特定事件有关的属性和方法。触发的事件类型不一样，可用的属性和方法也不一样。不过，所有事件都会有下表列出的成员。</p>
+<table>
+<thead>
+<tr>
+<th>属性/方法</th>
+<th style="text-align:center">类 型</th>
+<th style="text-align:center">读/写</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bubbles</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">只读</td>
+<td>表明事件是否冒泡</td>
+</tr>
+<tr>
+<td>cancelable</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">只读</td>
+<td>表明是否可以取消事件的默认行为</td>
+</tr>
+<tr>
+<td>currentTarget</td>
+<td style="text-align:center">Element</td>
+<td style="text-align:center">只读</td>
+<td>其事件处理程序当前正在处理事件的那个元素</td>
+</tr>
+<tr>
+<td>defaultPrevented</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">只读</td>
+<td>为 true表示已经调用了preventDefault()（DOM3级事件中新增）</td>
+</tr>
+<tr>
+<td>detail</td>
+<td style="text-align:center">Integer</td>
+<td style="text-align:center">只读</td>
+<td>与事件相关的细节信息</td>
+</tr>
+<tr>
+<td>eventPhase</td>
+<td style="text-align:center">Integer</td>
+<td style="text-align:center">只读</td>
+<td>调用事件处理程序的阶段：1表示捕获阶段，2表示“处于目标”，3表示冒泡阶段</td>
+</tr>
+<tr>
+<td>preventDefault()</td>
+<td style="text-align:center">Function</td>
+<td style="text-align:center">只读</td>
+<td>取消事件的默认行为。如果 cancelable 是 true，则可以使用这个方法</td>
+</tr>
+<tr>
+<td>stopImmediatePropagation()</td>
+<td style="text-align:center">Function</td>
+<td style="text-align:center">只读</td>
+<td>取消事件的进一步捕获或冒泡，同时阻止任何事件处理程序被调用（DOM3 级事件中新增）</td>
+</tr>
+<tr>
+<td>stopPropagation()</td>
+<td style="text-align:center">Function</td>
+<td style="text-align:center">只读</td>
+<td>取消事件的进一步捕获或冒泡。如果 bubbles 为 true，则可以使用这个方法</td>
+</tr>
+<tr>
+<td>target</td>
+<td style="text-align:center">Element</td>
+<td style="text-align:center">只读</td>
+<td>事件的目标</td>
+</tr>
+<tr>
+<td>trusted</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">只读</td>
+<td>为true表示事件是浏览器生成的。为 false 表示事件是由开发人员通过JavaScript创建的（DOM3级事件中新增）</td>
+</tr>
+<tr>
+<td>type</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">只读</td>
+<td>被触发的事件的类型</td>
+</tr>
+<tr>
+<td>view</td>
+<td style="text-align:center">AbstractView</td>
+<td style="text-align:center">只读</td>
+<td>与事件关联的抽象视图。等同于发生事件的 window 对象</td>
+</tr>
+</tbody>
+</table>
+<p>在事件处理程序内部，对象 this 始终等于 currentTarget 的值，而 target 则只包含事件的实际目标。如果直接将事件处理程序指定给了目标元素，则 this，currentTarget 和 target 包含相同的值。</p>
+<pre><code>var btn = document.getElementById(&#39;myBtn&#39;);
+btn.onclick = function(event) {
+    alert(event.currentTarget === this);     // true
+    alert(event.target === this);            // true
+}; 
+</code></pre><p>如果事件处理程序存在于按钮的父节点中（例如 document.body），那么这些值是不相同的。</p>
+<pre><code>document.body.onclick = function(event) {
+    alert(event.currentTarget === document.body);    // true
+    alert(this === document.body);    // true
+    alert(event.target === document.getElementById(&#39;myBtn&#39;)); // 点击&#39;myBtn&#39;，结果为true；点击body,结果为false
+};
+</code></pre><blockquote>
+<p><strong>注：只有在事件处理程序执行期间， event 对象才会存在；一旦事件处理程序执行完成， event 对象就会被销毁。</strong></p>
+</blockquote>
+<h3 id="IE中的事件对象"><a href="#IE中的事件对象" class="headerlink" title="IE中的事件对象"></a>IE中的事件对象</h3><p>&emsp;&emsp;与访问 DOM 中的 event 对象不同，要访问 IE 中的 event 对象有几种不同的方式，取决于指定事件处理程序的方法。</p>
+<ul>
+<li>在使用<strong> DOM0 级方法</strong>添加事件处理程序时， event 对象作为 window 对象的一个属性存在。<pre><code>var btn = document.getElementById(&#39;myBtn&#39;);
+btn.onclick = function() {
+  var event = window.event;
+  alert(event.type);    // click
+};
+</code></pre></li>
+<li>在使用<strong> DOM2级方法 </strong>添加事件处理程序时， event 对象作为参数被传入事件处理程序函数中。<pre><code>var btn = document.getElementById(&#39;myBtn&#39;);
+btn.attachEvent(&#39;onclick&#39;, function(event) {
+  alert(event.type);    // click
+});
+</code></pre></li>
+<li>在<strong> HTML特性 </strong>指定的事件处理程序中，通过 event 变量来访问 event对象（与 DOM中的事件模型相同）。<pre><code>&lt;input type=&quot;button&quot; value=&quot;Click Me&quot; onclick=&quot;alert(event.type)&quot;&gt;
+</code></pre>&emsp;&emsp;IE 的 event 对象同样也包含与创建它的事件相关的属性和方法。其中很多属性和方法都有对应的或者相关的 DOM属性和方法。所有事件对象都会包含下表所列的属性和方法：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>属性/方法</th>
+<th style="text-align:center">类 型</th>
+<th style="text-align:center">读/写</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cancelBubble</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">读/写</td>
+<td>默认值为 false，但将其设置为 true，就可以取消事件冒泡（与DOM中的 stopPropagation() 方法的作用相同）</td>
+</tr>
+<tr>
+<td>returnValue</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">读/写</td>
+<td>默认值为 true，但将其设置为 false，就可以取消事件的默认行为（与DOM中的 preventDefault() 方法的作用相同），但没有办法确定事件是否能被取消</td>
+</tr>
+<tr>
+<td>srcElement</td>
+<td style="text-align:center">Element</td>
+<td style="text-align:center">只读</td>
+<td>事件的目标（与DOM中的 target 属性相同）</td>
+</tr>
+<tr>
+<td>type</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">只读</td>
+<td>被触发的事件的类型</td>
+</tr>
+</tbody>
+</table>
+<h3 id="跨浏览器的事件对象"><a href="#跨浏览器的事件对象" class="headerlink" title="跨浏览器的事件对象"></a>跨浏览器的事件对象</h3><pre><code>var EventUtil = {
+    getEvent: function(event) {
+        return event ? event : window.event;
+    },
+
+    getTarget: function(event) {
+        return event.target || event.srcElement;
+    },
+
+    preventDefault: function(event) {
+        if (event.preventDefault) {
+            event.preventDefault();
+        } else {
+            event.returnValue = false;
+        }
+    },
+
+    stopPropagation: function(event) {
+        if (event.stopPropagation) {
+            event.stopPropagation();
+        } else {
+            event.cancelBubble = true;
+        }
+    },
+
+    addHandler: function(element, type, handler) {            
+        if (element.addEventListener) { 
+            element.addEventListener(type, handler, false); 
+        } else if (element.attachEvent) {                    
+            element.attachEvent(&#39;on&#39; + type, handler);
+        } else {
+            element[&#39;on&#39; + type] = handler;             
+        }
+    },  
+
+    removeHandler: function(element, type, handler) { 
+        if (element.removeEventListener) {
+            element.removeEventListener(type, handler, false);
+        } else if (element.detachEvent) {
+            element.detachEvent(&#39;on&#39; + type, handler);
+        } else {
+            element[&#39;on&#39; + type] = null;
+        }
+    }
+};
+</code></pre>
+            
+        </div>
+    
+</div>
+
+
+                
+                    <!-- Paradox Post Info -->
+                    
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2018/06/15/how-does-browser-work/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/03/30/JavaScript：事件流&事件处理程序/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?Pki5+pzkluqu53g+ouMWpA==", true)</script>
+    
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+        
+            HanabiBrowser.clearColors();
+        
+        
+            
+                
+                    HanabiBrowser.putColor('5c6774');
+                
+                    HanabiBrowser.putColor('4db7e9');
+                
+                    HanabiBrowser.putColor('f45765');
+                
+            
+        
+        HanabiBrowser.start('pre code',false);
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

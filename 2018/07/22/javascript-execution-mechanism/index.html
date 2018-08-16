@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            从 Event Loop 谈 JavaScript 的执行机制 | 
+        
+        邹洋的博客
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/zy-logo.png">
+    <link rel="icon" href="/img/zy-logo.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="在上一篇文章 从进程和线程了解浏览器的工作原理 中，我们已经了解了浏览器的渲染流程，浏览器初次渲染完成后，接下来就是 JS 逻辑处理了。这篇文章我们结合 event loop 来了解一下 JavaScript 代码是如何执行的。">
+    <meta name="keywords" content="大洋,JavaScript">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?F3DNsJRX++RFjWtybhKyBw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?r3AOKgPpG5hl03pXnHbbGg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+        
+            <link rel="stylesheet" href="/css/fontawesome.min.css">
+        
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #607d8b !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #607d8b !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #607d8b !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #eef1f5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="邹洋的博客">
+    <meta name="msapplication-starturl" content="http://zouyang0921.com/2018/07/22/javascript-execution-mechanism/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="邹洋的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/zy-logo.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://zouyang0921.com/2018/07/22/javascript-execution-mechanism/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="从 Event Loop 谈 JavaScript 的执行机制 | 邹洋的博客">
+    <meta property="og:image" content="/img/zy-logo.png">
+    <meta property="og:description" content="在上一篇文章 从进程和线程了解浏览器的工作原理 中，我们已经了解了浏览器的渲染流程，浏览器初次渲染完成后，接下来就是 JS 逻辑处理了。这篇文章我们结合 event loop 来了解一下 JavaScript 代码是如何执行的。">
+    <meta property="og:article:tag" content="JavaScript"> 
+
+    
+        <meta property="article:published_time" content="Sun Jul 22 2018 00:00:00 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jul 22 2018 17:03:28 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://zouyang0921.com/2018/07/22/javascript-execution-mechanism/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://zouyang0921.com/2018/07/22/javascript-execution-mechanism/index.html",
+    "headline": "从 Event Loop 谈 JavaScript 的执行机制",
+    "datePublished": "Sun Jul 22 2018 00:00:00 GMT+0800",
+    "dateModified": "Sun Jul 22 2018 17:03:28 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "zouyang0921",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Don't be the same, be better ！"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "邹洋的博客",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/zy-logo.png"
+        }
+    },
+    "keywords": ",JavaScript大洋",
+    "description": "在上一篇文章 从进程和线程了解浏览器的工作原理 中，我们已经了解了浏览器的渲染流程，浏览器初次渲染完成后，接下来就是 JS 逻辑处理了。这篇文章我们结合 event loop 来了解一下 JavaScript 代码是如何执行的。",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Isolation" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+                    <!-- Isolation Header -->
+                    <header class="header">
+    <div class="header-wrapper">
+        <!-- Header Copyright -->
+        <div class="header-copyright">
+            <div class="header-site">
+                ©&nbsp;
+                <script type="text/javascript">
+                    var fd = new Date();
+                    document.write(fd.getFullYear());
+                </script>
+                &nbsp;邹洋的博客
+            </div>
+            <!--
+            I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+            It will not impact the appearance and can give developers a lot of support :)
+
+            很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+            它不会影响美观并可以给开发者很大的支持。 :)
+            -->
+            <div>
+                Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a>
+                <br>
+                Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a>
+            </div>
+        </div>
+
+        <!-- Header Title -->
+        <span class="header-title header-item">
+            <a href="/" title="邹洋的博客">
+                邹洋的博客
+            </a>
+        </span>
+
+        <p class="header-slogan header-item">
+        
+            
+                Don't be the same, be better ！
+            
+        
+        </p>
+
+        <!-- Header Nav -->
+        <nav class="header-nav header-item">
+            <span class="header-nav-item">
+                <a href="/" title="Home">
+                    <span>主页</span>
+                </a>
+            </span>
+
+            <!-- Pages  -->
+            
+            
+        </nav>
+
+        <!-- Header SNS -->
+        <div class="header-item header-sns_list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+        <a href="https://weibo.com/u/1761377354/home?wvr=5&amp;lf=reg" target="_blank">
+            <i class="fa fa-weibo fa-lg" aria-hidden="true"></i>
+        </a>
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/zouyang0921" target="_blank">
+            <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+        </a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+    </div>
+</header>
+
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+
+                    <!-- Post TOC -->
+
+    
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+
+
+    <!-- Isolation Post Header -->
+    <!-- Post thumbnail -->
+    
+        <!-- Post Header Info -->
+        <div class="post-header_info without-thumbnail">
+            <!-- Author Avatar & Name -->
+            <img src="/img/avatar.png" class="avatar-img" width="44px" height="44px" alt="zouyang0921's avatar">
+            <span class="name-span">zouyang0921</span>
+        </div>
+
+        <!-- Null Thumbnail -->
+        <div class="post_thumbnail-null">
+    
+        </div>
+
+
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+
+    
+        <div class="post-content_wrapper">
+            <p class="post-title">
+                从 Event Loop 谈 JavaScript 的执行机制
+            </p>
+            <p>在上一篇文章 <a href="https://zouyang0921.github.io/2018/06/15/how-does-browser-work/" target="_blank" rel="noopener">从进程和线程了解浏览器的工作原理</a> 中，我们已经了解了浏览器的渲染流程，浏览器初次渲染完成后，接下来就是 JS 逻辑处理了。这篇文章我们结合 event loop 来了解一下 JavaScript 代码是如何执行的。</p>
+<a id="more"></a>
+<h2 id="浏览器环境下-JS-引擎的事件循环机制"><a href="#浏览器环境下-JS-引擎的事件循环机制" class="headerlink" title="浏览器环境下 JS 引擎的事件循环机制"></a>浏览器环境下 JS 引擎的事件循环机制</h2><p>在 <a href="https://zouyang0921.github.io/2018/06/15/how-does-browser-work/" target="_blank" rel="noopener">上一篇文章</a> 中我们已经知道了 JavaScript 是单线程的，这意味着 JavaScript 只有一个主线程来处理所有的任务。所以，所有任务都需要排队执行，上一个任务结束，才会执行下一个。如果上一个任务耗时很长，那么下一个任务也要一直等着。</p>
+<p>排队通常由两种原因造成：</p>
+<ul>
+<li>任务计算量过大，CPU 处理不过来；</li>
+<li>执行任务需要的东西没有准备好（如 Ajax 获取到数据才能往下执行），所以无法继续执行，只好等待 IO 设备（输入输出设备），而 CPU 却是闲着的。</li>
+</ul>
+<p>JavaScript 的设计者意识到，这时主线程完全可以不管 IO 设备，挂起处于等待中的任务，先运行排在后面的任务，等到 IO 设备返回了结果，再把挂起的任务继续执行下去。</p>
+<p>于是，任务可以分为两种：</p>
+<ul>
+<li><strong>同步任务</strong>：在主线程上排队执行的任务。只有上一个任务执行完，才能执行下一个任务；</li>
+<li><strong>异步任务</strong>：不进入主线程、而进入任务队列（task queue）的任务。只有任务队列通知主线程某个异步任务可以执行了，该任务才会进入主线程执行。</li>
+</ul>
+<p>JavaScript 执行的过程如下：</p>
+<ol>
+<li>所有同步任务都在主线程上执行，形成一个执行栈（execution context stack）。</li>
+<li>主线程之外还存在一个任务队列。当遇到一个异步任务时，并不会一直等待其返回结果，而是会将这个异步任务挂起，继续执行执行栈中的其他任务。当一个异步任务返回结果后，就会在任务队列中放置一个事件。</li>
+<li>被放入任务队列的事件不会立刻执行其回调，而是等待执行栈中的所有同步任务都执行完毕，主线程处于闲置状态时，主线程就会读取任务队列，看里面是否有事件。如果有，那么主线程会从中取出排在第一位的事件，并把这个事件对应的回调放入执行栈中，开始执行。</li>
+</ol>
+<p>只要执行栈空了，就会去读取任务队列，主线程从任务队列中读取事件的过程是循环不断的，这种执行机制称为事件循环（event loop）。</p>
+<p>这里引用 Philip Roberts的演讲《<a href="http://vimeo.com/96425312" target="_blank" rel="noopener">Help, I’m stuck in an event-loop</a>》中的一张图来协助理解：<br><img src="https://upload-images.jianshu.io/upload_images/4359173-fa580dcd9bfa3b36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>图中的 stack 表示我们所说的执行栈，WebAPIs代表一些异步任务，callback queue 则是任务队列。</p>
+<h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><p>任务队列除了放置异步任务的事件，还可以放置定时事件，即指定某些代码在多长时间后执行。</p>
+<p>定时器功能主要有 setTimeout() 和 setInterval() 这两个函数来完成，它们的内部运行机制完全一样，区别在于前者指定的代码只执行一次，后者为反复执行。这里我们主要讨论 setTimeout() 。</p>
+<pre><code>setTimeout(function() {
+    console.log(&#39;hello&#39;);
+}, 3000)
+</code></pre><p>上面这段代码，3000 毫秒后会将该定时事件放入任务队列中，等待主线程执行。</p>
+<p>如果将延迟时间设为 0，就表示当前代码执行完（执行栈清空）以后，立刻执行指定的回调函数。</p>
+<pre><code>setTimeout(function() {
+    console.log(1);
+}, 0);
+console.log(2);
+</code></pre><p>上面代码的执行结果总是：</p>
+<pre><code>2
+1
+</code></pre><p>因为只有在执行完第二个<code>console.log</code>以后，才会去执行任务队列中的回调函数。</p>
+<p>注意：</p>
+<ul>
+<li><p>setTimeout(fn, 0)的含义是：指定某个任务在主线程最早可得的空闲时间执行。</p>
+</li>
+<li><p>虽然代码的本意是 0 毫秒后就将事件放入任务队列，但是 W3C 在 HTML 标准中规定，setTimeout() 的延迟时间不能低于 4 毫秒。</p>
+</li>
+<li><p>setTimeout() 只是将事件插入了任务队列，必须要等到执行栈执行完毕，主线程才会去执行它指定的回调函数。如果当前代码耗时很长，那这个事件就得一直等待，所以并没有办法保证回调函数一定会在setTimeout() 指定的时间执行。</p>
+</li>
+</ul>
+<h2 id="macro-task-与-micro-task"><a href="#macro-task-与-micro-task" class="headerlink" title="macro task 与 micro task"></a>macro task 与 micro task</h2><p>前面我们已经将 JavaScript 事件循环机制梳理了一遍，在 ES5 中是够用了，但是在 ES6 中仍然会遇到一些问题，比如下面这段代码：</p>
+<pre><code>setTimeout(function() {
+    console.log(&#39;setTimeout&#39;);
+}, 0);
+new Promise(function(resolve) {
+    console.log(&#39;Promise1&#39;);
+    for (var i=0; i &lt; 10000; i++) {
+        i == 9999 &amp;&amp; resolve();
+    }
+    console.log(&#39;Promise2&#39;);
+}).then(function() {
+    console.log(&#39;then&#39;);
+});
+console.log(&#39;end&#39;);
+</code></pre><p>它的结果是：</p>
+<pre><code>Promise1
+Promise2
+end
+then
+setTimeout
+</code></pre><p>为什么呢？这里就需要解释一个新的概念：<code>macro-task</code> 和 <code>micro-task</code>。</p>
+<p>除了广义的同步任务和异步任务的划分，对任务还有更精细的定义：</p>
+<ul>
+<li><p><strong>macro-task（宏任务）</strong>：可以理解为每次执行栈执行的代码就是一个宏任务，包括每次从任务队列中获取一个事件并将其对应的回调放入到执行栈中执行。宏任务需要多次事件循环才能执行完，<strong>任务队列中的每一个事件都是一个宏任务</strong>。每次事件循环都会调入一个宏任务，浏览器为了能够使 JS 内部宏任务与 DOM 任务有序的执行，会在一个宏任务结束后，下一个宏任务开始前，对页面进行重新渲染。</p>
+</li>
+<li><p><strong>micro-task（微任务）</strong>：可以理解为在当前宏任务执行结束后立即执行的任务。微任务是一次性执行完的，在一个宏任务执行完毕后，就会将它执行期间产生的所有微任务都执行完毕。如果在微任务执行期间微任务队列加入了新的微任务，会将新的微任务放到队列尾部，之后会依次执行。</p>
+</li>
+</ul>
+<p>形成 macro-task 或 micro-task 的场景：</p>
+<ul>
+<li>macro-task：script（整体代码），setTimeout，setInterval，setImmediate，I/O，UI 渲染等</li>
+<li>micro-task：process.nextTick，Promise（这里指浏览器实现的原生 Promise），Object.observe，MutationObserver</li>
+</ul>
+<p>宏任务和微任务执行的顺序如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4359173-199e7480848ce173.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>现在我们再来看看上面那段代码是怎么执行的：</p>
+<ul>
+<li>整个 script 代码，放在了macro-task 队列中，取出来放入执行栈开始执行；</li>
+<li>遇到 setTimeout，加入到 macro-task 队列；</li>
+<li>遇到 Promise.then，放入到另一个队列 micro-task 队列；</li>
+<li>等执行栈执行完后，下一步该取出 micro-task 队列中的任务了，在这里也就是 Promise.then；</li>
+<li>等到 micro-task 队列都执行完后，然后再去取出 macro-task 队列中的setTimeout。</li>
+</ul>
+<h2 id="Node-js-中的-Event-Loop"><a href="#Node-js-中的-Event-Loop" class="headerlink" title="Node.js 中的 Event Loop"></a>Node.js 中的 Event Loop</h2><p>在 Node.js 中，事件循环表现出的状态与浏览器中大致相同。不同的是Node.js 中有一套自己的模型，它是通过 libuv 引擎来实现事件循环的。</p>
+<p>下面我们来看看 Node.js 是如何执行的？</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/4359173-cf0c043599001180.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li>Node.js 是 使用 V8 引擎作为 JS 解释器，V8 引擎将 JS 代码解析后去调用Node API；</li>
+<li>这些 API 由 libuv 引擎驱动，执行对应的任务。libuv 引擎将不同的任务分配给不同的线程，形成一个事件循环（event loop），以异步的方式将任务的执行结果返回给 V8 引擎；</li>
+<li>V8 引擎再将结果返回给用户。</li>
+</ul>
+<h3 id="事件循环模型"><a href="#事件循环模型" class="headerlink" title="事件循环模型"></a>事件循环模型</h3><p>下面是一个 libuv 引擎中的事件循环的模型：</p>
+<pre><code>   ┌───────────────────────┐
+┌─&gt;│        timers         │
+│  └──────────┬────────────┘
+│  ┌──────────┴────────────┐
+│  │     I/O callbacks     │
+│  └──────────┬────────────┘
+│  ┌──────────┴────────────┐
+│  │     idle, prepare     │
+│  └──────────┬────────────┘      ┌───────────────┐
+│  ┌──────────┴────────────┐      │   incoming:   │
+│  │         poll          │&lt;─────|  connections, │
+│  └──────────┬────────────┘      │   data, etc.  │
+│  ┌──────────┴────────────┐      └───────────────┘
+│  │        check          │
+│  └──────────┬────────────┘
+│  ┌──────────┴────────────┐
+└──┤    close callbacks    │
+   └───────────────────────┘
+</code></pre><p>注：模型中的每一个方块代表事件循环的一个阶段。</p>
+<p>（这块引用 Node 官网上的一篇文章 <a href="https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/" target="_blank" rel="noopener">https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/</a>，有兴趣的朋友可以看看原文）</p>
+<h3 id="事件循环各阶段详解"><a href="#事件循环各阶段详解" class="headerlink" title="事件循环各阶段详解"></a>事件循环各阶段详解</h3><p>从上面这个模型中，我们大致可以分析出 Node.js 中事件循环的顺序：</p>
+<p>外部输入数据 –&gt; 轮询阶段(poll) –&gt; 检查阶段(check) –&gt; 关闭事件回调阶段(close callback) –&gt; 定时器检测阶段(timers) –&gt; I/O 事件回调阶段(I/O callback) –&gt; 闲置阶段(idle, prepare) –&gt; 轮询阶段…</p>
+<p>各阶段的功能大致如下：</p>
+<ul>
+<li><strong>timers 阶段</strong>：这个阶段执行 setTimeout() 和 setInterval() 的回调；</li>
+<li><strong>I/O callbacks 阶段</strong>：这个阶段执行除了close 事件、定时器和 setImmediate() 的回调之外的其它回调；</li>
+<li><strong>idle，prepare 阶段</strong>：仅 Node 内部使用，可以不用理会；</li>
+<li><strong>poll 阶段</strong>：获取新的 I/O 事件，在一些特殊情况下 Node 会阻塞在这里；</li>
+<li><strong>check 阶段</strong>：执行 setImmediate() 的回调；</li>
+<li><strong>close callbacks 阶段</strong>：比如 socket.on(‘close’, callback) 的回调会在这个阶段执行。</li>
+</ul>
+<p>每个阶段都有一个装有 callbacks 的 queue(队列)，当 event loop 执行到一个指定阶段时，Node 将按先进先出的顺序执行该阶段的队列，当队列的 callback 执行完或者执行 callbacks 数量超过该阶段的上限时，event loop 会进入下一个阶段。</p>
+<p>下面我们来详细说说各个阶段：</p>
+<h4 id="poll-阶段"><a href="#poll-阶段" class="headerlink" title="poll 阶段"></a>poll 阶段</h4><p>poll 阶段是衔接整个 event loop 各个阶段比较重要的阶段。在 Node.js 里，任何异步方法（除 timer， close， setImmediate 之外）完成时，都会将 callback 加到 poll queue 里，并立即执行。</p>
+<p>当 V8 引擎将 JS 代码解析并传入 libuv 引擎后，循环首先进入 poll 阶段。poll 阶段的执行逻辑如下：</p>
+<ul>
+<li>先查看 poll queue 中是否有事件，如果有，就按顺序依次执行 callbacks。</li>
+<li>当 poll queue 为空时，<ul>
+<li>会检查是否有 setImmediate() 的 callback，如果有就进入 check 阶段执行这些 callback。</li>
+<li>同时也会检查是否有到期的 timer，如果有，就把这些到期的 timer 的 callback 按照调用顺序放到 timer queue 中，之后循环会进入 timer 阶段执行 timer queue 中的 callback。<br>这两者的顺序是不固定的，受到代码运行环境的影响。如果两者的 queue 都是空的，那么 event loop 会停留在 poll 阶段，直到有一个 I/O 事件返回，循环会进入 I/O callback 阶段，并立即执行这个事件的 callback。</li>
+</ul>
+</li>
+</ul>
+<h4 id="check-阶段"><a href="#check-阶段" class="headerlink" title="check 阶段"></a>check 阶段</h4><p>check 阶段专门用来执行 <code>setImmediate()</code> 方法的 callback，当 poll 阶段进入空闲状态，并且 setImmediate queue 中有 callback 时，事件循环进入这个阶段。</p>
+<h4 id="close-阶段"><a href="#close-阶段" class="headerlink" title="close 阶段"></a>close 阶段</h4><p>当一个 socket 连接或者一个 handle 被突然关闭时（例如，调用了 socket.destroy() 方法），close 事件会被发送到这个阶段执行回调；否则事件会用 process.nextTick() 方法发送出去。</p>
+<h4 id="timers-阶段"><a href="#timers-阶段" class="headerlink" title="timers 阶段"></a>timers 阶段</h4><p>这个阶段执行所有到期的 timer 加入到 timer queue 中 callback。timer callback 指通过 <code>setTimeout()</code> 或 <code>setInterval()</code> 设定的 callback。</p>
+<h4 id="I-O-callback-阶段"><a href="#I-O-callback-阶段" class="headerlink" title="I/O callback 阶段"></a>I/O callback 阶段</h4><p>这个阶段主要执行大部分 I/O 事件的 callback，包括一些为操作系统执行的 callback，例如：一个 TCP 连接发生错误时，系统需要执行 callback 来获得这个错误的报告。</p>
+<h3 id="process-nextTick-与-setImmediate"><a href="#process-nextTick-与-setImmediate" class="headerlink" title="process.nextTick() 与 setImmediate()"></a>process.nextTick() 与 setImmediate()</h3><p>Node.js 中有三个常用的用来推迟任务执行的方法，分别是：<code>process.nextTick()</code>，<code>setTimeout()</code>（setInterval() 与之相同）和 <code>setImmediate()</code>。</p>
+<h4 id="process-nextTick"><a href="#process-nextTick" class="headerlink" title="process.nextTick()"></a>process.nextTick()</h4><p>process.nextTick() 不在 event loop 的任何阶段内执行，而是在各个阶段切换的中间执行，即一个阶段执行完毕准备进入到下一个阶段前执行。</p>
+<p>下面我们来看一段代码：</p>
+<pre><code>const fs = require(&#39;fs);
+
+fs.readFile(__filename, () =&gt; {
+    setTimeout(() =&gt; {
+        console.log(&#39;setTimeout);
+    }, 0);
+    setImmediate(() =&gt; {
+        console.log(&#39;setImmediate&#39;);
+        process.nextTick(() =&gt; {
+            console.log(&#39;nextTick3&#39;);
+        });
+    });
+    process.nextTick(() =&gt; {
+        console.log(&#39;nextTick1&#39;);
+    });
+    process.nextTick(() =&gt; {
+        console.log(&#39;nextTick2&#39;);
+    });
+});
+</code></pre><p>结果为：</p>
+<pre><code>nextTick1
+nextTick2
+setImmediate
+nextTick3
+setTimeout
+</code></pre><p>从 poll –&gt; check 阶段，先执行process.nextTick，输出 nextTick1，nextTick2；<br>然后进入 check 阶段，执行setImmediate，输出 setImmediate；<br>执行完 setImmediate 后，出 check，进入 close callback 前，输出 nextTick3；<br>最后进入 timer 阶段，执行 setTimeout，输出 setTimeout。</p>
+<h4 id="setImmediate"><a href="#setImmediate" class="headerlink" title="setImmediate()"></a>setImmediate()</h4><p>在三个方法中，setImmediate() 和 setTimeout() 这两个方法很容易被弄混，然而实际上这两个方法的意义确大为不同。</p>
+<p><code>setTimeout()</code>是定义一个回调，并且希望这个回调在指定的时间间隔后第一时间去执行。注意这个“第一时间执行”，意味着，受到操作系统和当前执行任务的诸多影响，该回调并不会在我们预期的时间间隔后精准地执行。</p>
+<p><code>setImmediate()</code> 从意义上是立即执行的意思，但实际上是在一个固定的阶段（poll 阶段之后）才会执行回调。这个名字的意义和上面提到的 <code>process.nextTick()</code> 才是最匹配的。</p>
+<p><code>setImmediate()</code> 和 <code>setTimeout(fn, 0)</code> 表现上非常相似。猜猜下面这段代码的结果是什么？</p>
+<pre><code>setTimeout(() =&gt; {
+    console.log(&#39;setTimeout&#39;);
+}, 0);
+
+setImmediate(() =&gt; {
+    console.log(&#39;setImmediate&#39;);
+});
+</code></pre><p>答案是不确定。这取决于这段代码的运行环境，运行环境中各种复杂情况会导致在同步队列里两个方法的顺序随机决定。但是，在一种情况下可以准确判断两个方法回调的执行顺序，那就是在一个 I/O 事件的回调中。下面这段代码的顺序永远是固定的：</p>
+<pre><code>const fs = require(&#39;fs&#39;);
+
+fs.readFile(__filename, () =&gt; {
+    setTimeout(() =&gt; {
+        console.log(&#39;setTimeout&#39;);
+    }, 0);
+    setImmediate(() =&gt; {
+        console.log(&#39;setImmediate&#39;);
+    });
+});
+</code></pre><p>答案永远是：</p>
+<pre><code>setImmediate
+setTimeout
+</code></pre><p>在 I/O 事件的回调中，setImmediate() 方法的回调永远在 setTimeout() 的回调前执行。</p>
+<p>从上面 process.nextTick() 的示例代码我们可以看出：多个 process.nextTick() 总是在一次 event loop 执行完；多个 setImmediate() 可能需要多次 event loop 才能执行完。这正是 Node.js 10.0 版添加 setImmediate() 方法的原因，否则像下面这样递归调用 process.nextTick() 时，将会导致 Node 进入死循环，主线程根本不会去读取事件队列。</p>
+<pre><code>process.nextTick(function foo() {
+    process.nextTick(foo);
+});
+</code></pre><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>JavaScript 的事件循环是这门语言中非常重要且基础的概念，清楚的了解事件循环的执行顺序和各阶段的特点，可以使我们对一段异步代码的执行顺序有一个清晰的认知，从而减少代码执行的不确定性。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://juejin.im/post/59e85eebf265da430d571f89" target="_blank" rel="noopener">这一次，彻底弄懂 JavaScript 执行机制</a></li>
+<li><a href="http://www.dailichun.com/2018/01/21/js_singlethread_eventloop.html" target="_blank" rel="noopener">从浏览器多进程到 JS 单线程，JS 运行机制最全面的一次梳理</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank" rel="noopener">JavaScript 运行机制详解：再谈 Event Loop</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/33058983" target="_blank" rel="noopener">详解 JavaScript 中的 Event Loop（事件循环）机制</a></li>
+<li><a href="https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/" target="_blank" rel="noopener">The Node.js Event Loop, Timers, and process.nextTick()</a></li>
+</ul>
+
+            
+        </div>
+    
+</div>
+
+
+                
+                    <!-- Paradox Post Info -->
+                    
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2018/08/14/javascript-modularity/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/06/15/how-does-browser-work/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?Pki5+pzkluqu53g+ouMWpA==", true)</script>
+    
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+        
+            HanabiBrowser.clearColors();
+        
+        
+            
+                
+                    HanabiBrowser.putColor('5c6774');
+                
+                    HanabiBrowser.putColor('4db7e9');
+                
+                    HanabiBrowser.putColor('f45765');
+                
+            
+        
+        HanabiBrowser.start('pre code',false);
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

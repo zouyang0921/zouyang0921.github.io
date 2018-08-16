@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            JavaScript 模块化 | 
+        
+        邹洋的博客
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/zy-logo.png">
+    <link rel="icon" href="/img/zy-logo.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="随着 JavaScript 日新月异的发展，超过了它产生时候的自我定位，由于没有模块管理的概念，在做大型项目或文件组织的时候，就会异常纠结，而且后续也很难维护，长此以往，模块化是必然趋势~">
+    <meta name="keywords" content="大洋,JavaScript">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?F3DNsJRX++RFjWtybhKyBw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?r3AOKgPpG5hl03pXnHbbGg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+        
+            <link rel="stylesheet" href="/css/fontawesome.min.css">
+        
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #607d8b !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #607d8b !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #607d8b !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #eef1f5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="邹洋的博客">
+    <meta name="msapplication-starturl" content="http://zouyang0921.com/2018/08/14/javascript-modularity/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="邹洋的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/zy-logo.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://zouyang0921.com/2018/08/14/javascript-modularity/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="JavaScript 模块化 | 邹洋的博客">
+    <meta property="og:image" content="/img/zy-logo.png">
+    <meta property="og:description" content="随着 JavaScript 日新月异的发展，超过了它产生时候的自我定位，由于没有模块管理的概念，在做大型项目或文件组织的时候，就会异常纠结，而且后续也很难维护，长此以往，模块化是必然趋势~">
+    <meta property="og:article:tag" content="JavaScript"> 
+
+    
+        <meta property="article:published_time" content="Tue Aug 14 2018 00:00:00 GMT+0800">
+        <meta property="article:modified_time" content="Tue Aug 14 2018 13:14:47 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://zouyang0921.com/2018/08/14/javascript-modularity/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://zouyang0921.com/2018/08/14/javascript-modularity/index.html",
+    "headline": "JavaScript 模块化",
+    "datePublished": "Tue Aug 14 2018 00:00:00 GMT+0800",
+    "dateModified": "Tue Aug 14 2018 13:14:47 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "zouyang0921",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Don't be the same, be better ！"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "邹洋的博客",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/zy-logo.png"
+        }
+    },
+    "keywords": ",JavaScript大洋",
+    "description": "随着 JavaScript 日新月异的发展，超过了它产生时候的自我定位，由于没有模块管理的概念，在做大型项目或文件组织的时候，就会异常纠结，而且后续也很难维护，长此以往，模块化是必然趋势~",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Isolation" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+                    <!-- Isolation Header -->
+                    <header class="header">
+    <div class="header-wrapper">
+        <!-- Header Copyright -->
+        <div class="header-copyright">
+            <div class="header-site">
+                ©&nbsp;
+                <script type="text/javascript">
+                    var fd = new Date();
+                    document.write(fd.getFullYear());
+                </script>
+                &nbsp;邹洋的博客
+            </div>
+            <!--
+            I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+            It will not impact the appearance and can give developers a lot of support :)
+
+            很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+            它不会影响美观并可以给开发者很大的支持。 :)
+            -->
+            <div>
+                Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a>
+                <br>
+                Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a>
+            </div>
+        </div>
+
+        <!-- Header Title -->
+        <span class="header-title header-item">
+            <a href="/" title="邹洋的博客">
+                邹洋的博客
+            </a>
+        </span>
+
+        <p class="header-slogan header-item">
+        
+            
+                Don't be the same, be better ！
+            
+        
+        </p>
+
+        <!-- Header Nav -->
+        <nav class="header-nav header-item">
+            <span class="header-nav-item">
+                <a href="/" title="Home">
+                    <span>主页</span>
+                </a>
+            </span>
+
+            <!-- Pages  -->
+            
+            
+        </nav>
+
+        <!-- Header SNS -->
+        <div class="header-item header-sns_list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+        <a href="https://weibo.com/u/1761377354/home?wvr=5&amp;lf=reg" target="_blank">
+            <i class="fa fa-weibo fa-lg" aria-hidden="true"></i>
+        </a>
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/zouyang0921" target="_blank">
+            <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+        </a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+    </div>
+</header>
+
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+
+                    <!-- Post TOC -->
+
+    
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+
+
+    <!-- Isolation Post Header -->
+    <!-- Post thumbnail -->
+    
+        <!-- Post Header Info -->
+        <div class="post-header_info without-thumbnail">
+            <!-- Author Avatar & Name -->
+            <img src="/img/avatar.png" class="avatar-img" width="44px" height="44px" alt="zouyang0921's avatar">
+            <span class="name-span">zouyang0921</span>
+        </div>
+
+        <!-- Null Thumbnail -->
+        <div class="post_thumbnail-null">
+    
+        </div>
+
+
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+
+    
+        <div class="post-content_wrapper">
+            <p class="post-title">
+                JavaScript 模块化
+            </p>
+            <p>随着 JavaScript 日新月异的发展，超过了它产生时候的自我定位，由于没有模块管理的概念，在做大型项目或文件组织的时候，就会异常纠结，而且后续也很难维护，长此以往，模块化是必然趋势~</p>
+<a id="more"></a>
+<p>模块化的主要特征是:</p>
+<ul>
+<li>可复用</li>
+<li>封装了变量和函数，和全局的 namaspace 不接触，松耦合</li>
+<li>只暴露可用的 public 方法，其它私有方法全部隐藏</li>
+</ul>
+<p>目前比较流行的 JS 模块化规范有 CommonJS、AMD、CMD、UMD 以及 ES6 的模块化。</p>
+<h2 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h2><p>Node.js 是 CommonJS 规范的主要实践者，它有四个重要的环境变量为模块化的实现提供支持：<code>module</code>、<code>exports</code>、<code>require</code>、<code>global</code>。实际使用时，通过 <code>module.exports</code> 导出对外的变量或接口，通过 <code>require</code> 导入其它模块的输出到当前的模块的作用域中。</p>
+<h3 id="模块定义"><a href="#模块定义" class="headerlink" title="模块定义"></a>模块定义</h3><pre><code>//  定义模块 math.js
+var basicNum = 0;
+function add(a, b) {
+    return a + b;
+}
+
+module.exports = { // 在这里写需要向外暴露的变量或函数
+    basicNum: basicNum,
+    add: add
+};
+</code></pre><h3 id="模块引用"><a href="#模块引用" class="headerlink" title="模块引用"></a>模块引用</h3><pre><code>// 引入自定义的模块，参数需要包含路径，可省略后缀.js
+var math = require(&#39;./math);
+math.add(3, 5);
+</code></pre><pre><code>// 引入核心模块，参数直接写模块名，不需要包含路径
+var http = require(&#39;http&#39;);
+http.createServer(...).listen(8080);
+</code></pre><h3 id="module-exports-v-s-exports"><a href="#module-exports-v-s-exports" class="headerlink" title="module.exports v.s. exports"></a>module.exports v.s. exports</h3><p>很多时候，我们会看到在一个模块中有两种方式来输出变量：</p>
+<p>方式一：对 module.exports 赋值</p>
+<pre><code>// hello.js
+function sayHello() {
+    console.log(&#39;Hello&#39;);
+}
+function sayGoodbye() {
+    console.log(&#39;Goodbye&#39;);
+}
+
+module.exports = {
+    sayHello: sayHello,
+    sayGoodbye: sayGoodbye
+};
+</code></pre><p>方式二：直接使用 exports</p>
+<pre><code>// hello.js
+function sayHello() {
+    console.log(&#39;Hello&#39;);
+}
+function sayGoodbye() {
+    console.log(&#39;Goodbye&#39;);
+}
+
+exports.sayHello = sayHello;
+exports.sayGoodbye = sayGoodbye;
+</code></pre><p>但是，不可以直接对 exports 赋值。</p>
+<pre><code>// 代码可以执行，但是并没有输出任何变量
+exports = {
+    sayHello: sayHello,
+    sayGoodbye: sayGoodbye
+};
+</code></pre><p>原因是什么呢？我们来分析一下 Node.js 的加载机制。</p>
+<p>首先，Node.js 会把待加载的文件 <code>hello.js</code> 放入一个包装函数 <code>load()</code> 中执行。在执行 <code>load()</code> 函数前，Node.js 准备好了 module 变量：</p>
+<pre><code>var module = {
+    id: &#39;hello&#39;,
+    exports: {}
+};
+</code></pre><p><code>load()</code> 函数最终返回 <code>module.exports</code>：</p>
+<pre><code>var load = function(module) {
+    // hello.js 文件的内容
+    ...
+
+    // load 函数返回
+    return module.exports;
+};
+
+var exports = load(module);
+</code></pre><p>也就是说，<code>exports</code> 实际上是 <code>module.exports</code> 的引用，或者理解为 <code>exports</code> 是一个指针，指向 <code>module.exports</code> ，所以在使用 exports 的时候，只能是 <code>exports.sayHello = function() {...}</code> 这样的方式，而不能使用</p>
+<p><code>exports = { sayHello: function() {}}</code></p>
+<p>这种方式相当于重新定义了 <code>exports</code>，<code>module.exports</code> 仍然是空对象 <code>{}</code>，所以给 <code>exports</code> 赋值是无效的。</p>
+<p><strong>优点：</strong>解决了依赖、全局变量污染的问题。</p>
+<p><strong>缺点：</strong>CommonJS 用同步的方式加载模块。在服务端，模块文件都存在本地磁盘，读取非常快，所以这样做不会有问题。但是在浏览器端，限于网络原因，更合理的方案是使用异步加载。</p>
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><p>AMD( Asynchronous Module Definition ) 是 Require.js 在推广过程中对模块定义的规范化产出。</p>
+<p>AMD 规范采用异步方式加载模块，所有依赖这个模块的语句都定义在一个回调函数中，等到加载完成后，这个回调函数才会执行。</p>
+<p>实现 AMD 规范的模块化通过 <code>define()</code> 方法将代码定义为模块，通过 <code>require()</code> 方法实现模块的加载。</p>
+<p>这里以 require.js 为例，首先将 require.js 引入到页面中：</p>
+<pre><code>&lt;script src=&quot;js/require.js&quot; data-main=&quot;js/main&quot;&gt;&lt;/script&gt;
+</code></pre><h3 id="定义模块"><a href="#定义模块" class="headerlink" title="定义模块"></a>定义模块</h3><p>（1）独立模块</p>
+<p>即 不需要依赖任何其他模块</p>
+<pre><code>// math.js
+define(function() {
+    var basicNum = 0;
+    var add = function(a, b) {
+        return a + b;
+    };
+    return {
+        basicNum: basicNum,
+        add: add
+    };
+});
+</code></pre><p>（2）非独立模块</p>
+<p>即 需要依赖其他模块</p>
+<pre><code>define([&#39;underscore&#39;], function(_) {
+    var classify = function(list) {
+        _.countBy(list, function(num) {
+            return num &gt; 30 ? &#39;old&#39; : &#39;young&#39;;
+        });
+    };
+    return {
+        classify: classify
+    };
+});
+</code></pre><h3 id="引用模块"><a href="#引用模块" class="headerlink" title="引用模块"></a>引用模块</h3><pre><code>require([&#39;jquery&#39;, &#39;math&#39;], function($, math) {
+    var sum = math.add(3, 5);
+    $(&#39;#sum&#39;).html(sum);
+});
+</code></pre><p>require.js 还提供了一个 API： <code>require.config()</code> ，可以用来配置项目中用到的基础模块。</p>
+<pre><code>// 通过 config() 指定各模块路径和引用名
+require.config({
+    baseUrl: &#39;js/lib&#39;,
+    paths: {
+        &#39;jquery&#39;: &#39;jquery.min&#39;, // 实际路径为 js/lib/jquery.min.js
+        &#39;underscore&#39;: &#39;underscore.min&#39;
+    }
+});
+
+// 引入模块
+require([&#39;jquery&#39;, &#39;underscore&#39;]， function($, _) {
+    ...
+});
+</code></pre><p><strong>优点：</strong>适合在浏览器环境中异步加载模块，可以并行加载多个模块。</p>
+<p><strong>缺点：</strong>不能按需加载，开发成本大。</p>
+<h2 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h2><p>CMD( Common Module Definition ) 是 Sea.js 在推广过程中对模块定义的规范化产出。</p>
+<p><strong>AMD 推崇依赖前置、提前执行，CMD 推崇依赖就近、延迟执行。</strong></p>
+<pre><code>// AMD 写法
+define([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], function(a, b, c, d, e) {
+    // 等于在最前面声明并初始化了所有依赖的模块
+    a.doSomething();
+    if (false) {
+        // 即使没有用到某个模块 b，但 b 还是提前执行了
+        b.doSomething();
+    }
+});
+
+// CMD 写法
+define(function(require, exports, module) {
+    var a = require(&#39;./a); // 在需要时声明
+    a.doSomething();
+    if (false) {
+        var b = require(&#39;./b);
+        b.doSomething();
+    }
+});
+</code></pre><h2 id="UMD"><a href="#UMD" class="headerlink" title="UMD"></a>UMD</h2><p>UMD ( Universal Module Definition )，希望提供一个前后端跨平台的解决方案(支持 AMD 与 CommonJS 模块方式)。</p>
+<p>UMD 的实现原理：</p>
+<ol>
+<li>先判断是否支持 Node.js 模块格式( exports 是否存在 )，存在则使用 Node.js 模块格式。</li>
+<li>再判断是否支持 AMD（define 是否存在），存在则使用 AMD 方式加载模块。</li>
+<li>前两个都不存在，则将模块公开到全局( window 或 global )。</li>
+</ol>
+<p>下面是一个示例：</p>
+<p>eventUtil.js</p>
+<pre><code>(function(root, factory) {
+    if (typef exports === &#39;object&#39;) {
+        module.exports = factory();
+    } else if (typeof define === &#39;function&#39; &amp;&amp; define.amd) {
+        define(factory);
+    } else {
+        root.eventUtil = factory();
+    }
+})(this, function() {
+    // module
+    return {
+        addEvent: function(el, type, handle) {
+            // ...
+        },
+        removeEvent: function(el, type, handle) {
+            // ...
+        }
+    };
+});
+</code></pre><h2 id="ES6-Module"><a href="#ES6-Module" class="headerlink" title="ES6 Module"></a>ES6 Module</h2><p>在 ES6 中， 我们可以通过 <code>import</code> 引入模块，通过 <code>export</code> 导出模块，功能比前几个方案更强大，也是我们推荐使用的，但是由于浏览器对 ES6 的支持程度不同，目前都是使用 babel 或 traceur 把 ES6 代码转化为 ES5 代码，然后再在浏览器环境中执行。</p>
+<pre><code>// 定义模块 math.js
+var basicNum = 0;
+var add = function(a, b) {
+    return a + b;
+};
+
+export { basicNum, add };
+</code></pre><pre><code>// 引用模块
+import { basicNum, add } from &#39;./math&#39;;
+
+function test(element) {
+    element.textContent = add(basicNum, 99);
+}
+test();
+</code></pre><p>导出模块时还可以用 <code>export default</code> ，为模块指定默认输出，对应的 <code>import</code> 语句不需要使用大括号。</p>
+<pre><code>// 输出模块
+export default {
+    basicNum,
+    add
+}
+
+// 引入模块
+import math from &#39;./math&#39;;
+</code></pre><p><strong>注：一个模块只能有一个 export default。</strong></p>
+<h2 id="CommonJS-与-ES6-模块化的差异"><a href="#CommonJS-与-ES6-模块化的差异" class="headerlink" title="CommonJS 与 ES6 模块化的差异"></a>CommonJS 与 ES6 模块化的差异</h2><p><strong>1. CommonJS 支持动态导入，也就是 <code>require(${path}/xx.js)</code> ，ES6 目前还不支持，但是已有提案。</strong></p>
+<p><strong>2. CommonJS 是同步导入，ES6是异步导入。</strong></p>
+<ul>
+<li>CommonJS 因为用于服务端，文件都在本地，同步导入即使卡住主线程影响也不大。</li>
+<li>ES6 因为用于浏览器，需要下载文件，如果也采用同步导入会对渲染有很大影响。</li>
+</ul>
+<p><strong>3. CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。</strong></p>
+<ul>
+<li>CommonJS 模块输出的是值的拷贝，也就是说，一旦输出一个值，模块内部的变化就影响不到这个值；另一方面，如果导出的值变了，导入的值也不会变，所以如果想更新值，必须重新导入一次。</li>
+<li>ES6 采用实时绑定的方式，导入和导出的值都指向同一个内存地址，所以导入的值会跟随导出的值变化。</li>
+</ul>
+<p><strong>4. CommonJS 模块是运行时加载，ES6 模块是编译时加载。</strong></p>
+<ul>
+<li>CommonJS 模块就是一个对象，在导入时先加载整个模块，生成一个对象( 这个对象只有在脚本运行完才会生成 )，然后再从这个对象上读取方法，这种加载称为“运行时加载”。 </li>
+<li>ES6 模块不是对象，它的对外接口只是一种静态定义，在代码运行之前( 即编译时 )的静态解析阶段就完成了模块加载，比 CommonJS 模块的加载方式更高效。</li>
+</ul>
+
+            
+        </div>
+    
+</div>
+
+
+                
+                    <!-- Paradox Post Info -->
+                    
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/07/22/javascript-execution-mechanism/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?Pki5+pzkluqu53g+ouMWpA==", true)</script>
+    
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+        
+            HanabiBrowser.clearColors();
+        
+        
+            
+                
+                    HanabiBrowser.putColor('5c6774');
+                
+                    HanabiBrowser.putColor('4db7e9');
+                
+                    HanabiBrowser.putColor('f45765');
+                
+            
+        
+        HanabiBrowser.start('pre code',false);
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
