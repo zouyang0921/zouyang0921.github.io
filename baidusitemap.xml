@@ -4,6 +4,77 @@
 
     
   <url>
+    <loc>http://zouyang0921.com/2018/11/05/HTTP-related-knowledge/</loc>
+    <lastmod>2018-11-07T04:36:13.595Z</lastmod>
+    <data>
+        <display>
+        <title>前端需要了解的 HTTP 知识</title>
+        <pubTime>2018-11-04T16:00:00.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>笔记</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>http://zouyang0921.com/2017/02/12/how-ajax-works/</loc>
+    <lastmod>2018-08-19T15:51:41.744Z</lastmod>
+    <data>
+        <display>
+        <title>AJAX的工作原理</title>
+        <pubTime>2017-02-11T16:00:00.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://zouyang0921.com/2017/03/30/JavaScript%EF%BC%9A%E4%BA%8B%E4%BB%B6%E6%B5%81&%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F/</loc>
+    <lastmod>2018-08-19T13:44:57.296Z</lastmod>
+    <data>
+        <display>
+        <title>JavaScript：事件流 & 事件处理程序</title>
+        <pubTime>2017-03-29T16:00:00.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://zouyang0921.com/2017/03/31/JavaScript%EF%BC%9A%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1/</loc>
+    <lastmod>2018-08-19T13:44:19.167Z</lastmod>
+    <data>
+        <display>
+        <title>JavaScript：事件对象</title>
+        <pubTime>2017-03-30T16:00:00.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://zouyang0921.com/2018/08/14/javascript-modularity/</loc>
     <lastmod>2018-08-14T05:14:47.341Z</lastmod>
     <data>
@@ -61,57 +132,6 @@
         <display>
         <title>从 Event Loop 谈 JavaScript 的执行机制</title>
         <pubTime>2018-07-21T16:00:00.000Z</pubTime>
-        
-        <tag>JavaScript</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://zouyang0921.com/2017/02/12/how-ajax-works/</loc>
-    <lastmod>2018-06-22T08:03:04.993Z</lastmod>
-    <data>
-        <display>
-        <title>AJAX的工作原理</title>
-        <pubTime>2017-02-11T16:00:00.000Z</pubTime>
-        
-        <tag>JavaScript</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://zouyang0921.com/2017/03/31/JavaScript%EF%BC%9A%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1/</loc>
-    <lastmod>2018-06-22T08:00:19.080Z</lastmod>
-    <data>
-        <display>
-        <title>JavaScript：事件对象</title>
-        <pubTime>2017-03-30T16:00:00.000Z</pubTime>
-        
-        <tag>JavaScript</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://zouyang0921.com/2017/03/30/JavaScript%EF%BC%9A%E4%BA%8B%E4%BB%B6%E6%B5%81&%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F/</loc>
-    <lastmod>2018-06-22T07:49:09.598Z</lastmod>
-    <data>
-        <display>
-        <title>JavaScript：事件流 & 事件处理程序</title>
-        <pubTime>2017-03-29T16:00:00.000Z</pubTime>
         
         <tag>JavaScript</tag>
          

@@ -249,7 +249,7 @@ AJAX = 异步 JavaScript 和 XML
 
     
         <meta property="article:published_time" content="Sun Feb 12 2017 00:00:00 GMT+0800">
-        <meta property="article:modified_time" content="Fri Jun 22 2018 16:03:04 GMT+0800">
+        <meta property="article:modified_time" content="Sun Aug 19 2018 23:51:41 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -272,7 +272,7 @@ AJAX = 异步 JavaScript 和 XML
     "mainEntityOfPage": "http://zouyang0921.com/2017/02/12/how-ajax-works/index.html",
     "headline": "AJAX的工作原理",
     "datePublished": "Sun Feb 12 2017 00:00:00 GMT+0800",
-    "dateModified": "Fri Jun 22 2018 16:03:04 GMT+0800",
+    "dateModified": "Sun Aug 19 2018 23:51:41 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "zouyang0921",
@@ -521,9 +521,9 @@ xmlHttp.send(&#39;fname=Bill&amp;lname=Gates&#39;);
       oAjax.onreadystatechange = function() {
           if (oAjax.readyState == 4) {
               if (oAjax.status &gt;= 200 &amp;&amp; oAjax.status &lt; 300 || oAjax.status == 304) {
-                  success&amp;&amp;success(oAjax.responseText);    // 成功的回调函数
+                  success &amp;&amp; success(oAjax.responseText);    // 成功的回调函数
               } else {
-                  error&amp;&amp;error(oAjax.status);              // 失败的回调函
+                  error &amp;&amp; error(oAjax.status);              // 失败的回调函
               }
           }
       };
